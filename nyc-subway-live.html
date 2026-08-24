@@ -579,8 +579,16 @@ function draw(){
   drawUi(list);
 
   if(now-(S.ui||0)>400){S.ui=now;
-    const lbl=S.live?String(list.length):'\u2014';
+    /* around half the feed is trains staged at origin terminals that never
+       departed: real and drawn, but not moving. The hero number is the count
+       that actually earns the words under it; the total goes in the kicker. */
+    let mv=0;for(const q of list)if(q.frac<1)mv++;
+    const lbl=S.live?String(mv):'\u2014';
     if(n.textContent!==lbl)n.textContent=lbl;
+    if(S.live){
+      const nl='In motion · '+list.length+' tracked';
+      if(nlab.textContent!==nl)nlab.textContent=nl;
+    }
     if(S.sel){const p=list.find(q=>q.t.id===S.sel);if(p)fill(p);else{S.sel=null;card.classList.remove('show')}}
   }
   requestAnimationFrame(draw);
