@@ -67,20 +67,45 @@
   .bul.wide{width:auto;padding:0 13px;border-radius:15px;font-size:9px;letter-spacing:.22em;
     background:transparent;border:1px solid var(--brass-lo);color:var(--muted);opacity:1}
 
-  .card{position:absolute;left:30px;bottom:78px;width:min(400px,calc(100% - 60px));
-    background:rgba(8,12,23,.95);border:1px solid var(--brass-lo);padding:17px 19px;display:none;
+  .card{position:absolute;right:22px;top:118px;width:400px;
+    background:rgba(8,12,23,.95);border:1px solid var(--brass-lo);padding:20px;display:none;
     backdrop-filter:blur(14px);animation:rise .2s ease}
   .card::after{content:'';position:absolute;inset:5px;border:1px solid var(--brass);opacity:.22;pointer-events:none}
   @keyframes rise{from{opacity:0;transform:translateY(8px)}}
-  .card.show{display:block}
-  .crow{display:flex;align-items:center;gap:12px}
-  .cbul{width:34px;height:34px;border-radius:50%;font:400 15px/34px var(--deco);
+  .card.show{display:flex;flex-direction:column;gap:15px}
+  .crow{display:flex;align-items:center;gap:13px;padding-right:20px}
+  .chead{display:flex;flex-direction:column;gap:4px;min-width:0}
+  .cbul{width:38px;height:38px;border-radius:50%;font:400 16px/38px var(--deco);
     text-align:center;color:#fff;flex:none;box-shadow:0 0 0 1px var(--brass)}
   .cto{font-family:var(--deco);font-size:15px;letter-spacing:.05em;color:var(--sig);
     overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-  .cmeta{margin-top:12px;font:400 11px/1.75 var(--mono);letter-spacing:.05em;color:var(--muted);white-space:pre-line}
-  .cx{position:absolute;top:9px;right:11px;color:var(--muted);font-size:18px;line-height:1;
-    background:none;border:0;cursor:pointer;padding:5px;z-index:1}
+  .ckick{font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:var(--muted);
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .chev{display:block;width:100%;aspect-ratio:360/8;opacity:.55}
+  .chev path{fill:none;stroke:var(--brass);stroke-width:1}
+  .cstats{display:flex;align-items:stretch;gap:15px}
+  .cstat{display:flex;flex-direction:column;gap:6px;flex:1 1 0;min-width:0}
+  .cdiv{width:1px;background:var(--brass);opacity:.25;flex:none}
+  .cnum{display:flex;align-items:baseline;gap:4px}
+  .cnum b{font:400 27px/1 var(--mono);color:var(--brass-hi);font-variant-numeric:tabular-nums}
+  .cnum i{font-style:normal;font-size:9px;letter-spacing:.16em;color:var(--muted)}
+  .csec{display:flex;flex-direction:column;gap:10px}
+  .csky{display:block;width:100%;aspect-ratio:360/96}
+  .csky .grid{fill:none;stroke:var(--brass);stroke-width:1;opacity:.15}
+  .csky .bld{fill:var(--brass);opacity:.8;stroke:none}
+  .csky .spire{fill:none;stroke:var(--brass-hi);stroke-width:1.2;opacity:.7}
+  .csky .base{fill:none;stroke:var(--brass);stroke-width:1.4;opacity:.9}
+  .ctrace{display:block;width:100%;aspect-ratio:360/26}
+  .cends,.cfoot{display:flex;justify-content:space-between;gap:12px;
+    font:400 9px var(--mono);letter-spacing:.11em;color:var(--muted);text-transform:uppercase}
+  .cends span,.cfoot span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:49%}
+  .cx{position:absolute;top:10px;right:12px;color:var(--muted);font-size:18px;line-height:1;
+    background:none;border:0;cursor:pointer;padding:6px;z-index:1}
+  @media (max-width:860px){
+    .card{left:0;right:0;top:auto;bottom:0;width:auto;max-height:66%;overflow-y:auto;
+      border-left:0;border-right:0;border-bottom:0;
+      padding:18px 20px calc(20px + env(safe-area-inset-bottom))}
+  }
 
   .panic{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);width:min(420px,calc(100% - 40px));
     margin:0 auto;border:1px solid var(--brass-lo);background:rgba(8,12,23,.97);padding:22px;display:none}
@@ -100,7 +125,6 @@
     .meter b{font-size:29px}
     .hair{width:98px}
     .bar{padding-left:22px;padding-right:22px}
-    .card{left:22px;width:calc(100% - 44px)}
     .cnr{width:34px;height:34px}
   }
   @media (prefers-reduced-motion:reduce){.card{animation:none}}
@@ -143,8 +167,44 @@
 
   <div class="card" id="card">
     <button class="cx" id="cx">&times;</button>
-    <div class="crow"><div class="cbul" id="cb">1</div><div class="cto" id="ct">&mdash;</div></div>
-    <div class="cmeta" id="cm"></div>
+
+    <div class="crow">
+      <div class="cbul" id="cb">1</div>
+      <div class="chead">
+        <div class="ckick" id="dsub">&mdash;</div>
+        <div class="cto" id="ct">&mdash;</div>
+      </div>
+    </div>
+
+    <svg class="chev" viewBox="0 0 360 8"><path d="M 0 4 H 138 M 222 4 H 360"></path><path d="M 148 7 L 156 1 L 164 7 L 172 1 L 180 7 L 188 1 L 196 7 L 204 1 L 212 7"></path></svg>
+
+    <div class="cstats">
+      <div class="cstat"><div class="ckick">Speed</div><div class="cnum"><b id="dsp">0</b><i>MPH</i></div></div>
+      <div class="cdiv"></div>
+      <div class="cstat"><div class="ckick">Average</div><div class="cnum"><b id="dav">0</b><i>MPH</i></div></div>
+      <div class="cdiv"></div>
+      <div class="cstat"><div class="ckick">Peak</div><div class="cnum"><b id="dpk">0</b><i>MPH</i></div></div>
+    </div>
+
+    <div class="csec">
+      <div class="ckick" id="dvlab">Velocity &middot; tracked history</div>
+      <svg class="csky" viewBox="0 0 360 96">
+        <path class="grid" d="M 0 10 H 360 M 0 36 H 360 M 0 62 H 360"></path>
+        <path class="bld" id="dsky" d=""></path>
+        <path class="spire" id="dspr" d=""></path>
+        <path class="base" d="M 0 88 H 360"></path>
+      </svg>
+    </div>
+
+    <svg class="chev" viewBox="0 0 360 8"><path d="M 0 4 H 138 M 222 4 H 360"></path><path d="M 148 7 L 156 1 L 164 7 L 172 1 L 180 7 L 188 1 L 196 7 L 204 1 L 212 7"></path></svg>
+
+    <div class="csec">
+      <div class="ckick" id="djlab">Journey</div>
+      <svg class="ctrace" viewBox="0 0 360 26"><g id="dtrace"></g></svg>
+      <div class="cends"><span id="dj0">&mdash;</span><span id="dj1">&mdash;</span></div>
+    </div>
+
+    <div class="cfoot"><span id="dcid">&mdash;</span><span id="dctr">&mdash;</span></div>
   </div>
 
   <div class="panic" id="panic">
@@ -171,7 +231,9 @@ const ORDER=['1','2','3','4','5','6','7','A','C','E','B','D','F','M','G','J','Z'
 const FEEDS=['','-ace','-bdfm','-g','-jz','-nqrw','-l','-si']
   .map(s=>'https://api-endpoint.mta.info/Dataservice/mtagtfsfeeds/nyct%2Fgtfs'+s);
 
+const RELAY='https://tight-band-78db.acellante.workers.dev/?url=';
 const PROXIES=[
+  u=>RELAY+encodeURIComponent(u),
   u=>u,
   u=>'https://corsproxy.io/?url='+encodeURIComponent(u),
   u=>'https://api.allorigins.win/raw?url='+encodeURIComponent(u),
@@ -334,7 +396,7 @@ function positions(){
       const e2=smooth(Math.max(0,f-0.10));
       px=B[1]+(A[1]-B[1])*e2; py=B[0]+(A[0]-B[0])*e2;
     }
-    out.push({t,r,x,y,px,py,nb,frac,dir,eta:(next.arr||0)-now});
+    out.push({t,r,x,y,px,py,nb,frac,dir,idx:i,eta:(next.arr||0)-now});
   }
   return out;
 }
@@ -415,7 +477,7 @@ function sample(list){
     if(!h){h=[];S.hist.set(p.t.id,h)}
     const last=h[h.length-1];
     if(!last||now-last.t>=SAMPLE_MS){
-      h.push({x:p.x,y:my(p.y),t:now});
+      h.push({x:p.x,y:my(p.y),la:p.y,t:now});
       if(h.length>MAX_PTS)h.shift();
     }
   }
@@ -432,17 +494,23 @@ function drawTrails(){
     const h=S.hist.get(p.t.id);if(!h||h.length<2)continue;
     const n=h.length,c1=Math.floor(n*.45),c2=Math.floor(n*.78);
     ctx.strokeStyle=COLORS[p.r]||'#889';
-    const tiers=[[0,c1+1,.10,lw*.5],[c1,c2+1,.24,lw*.78],[c2,n,.55,lw]];
+    /* older track is faint and smooth, so it can be walked coarsely: this is
+       most of the path work and none of the legibility */
+    const tiers=[[0,c1+1,.10,lw*.5,3],[c1,c2+1,.24,lw*.78,2],[c2,n,.55,lw,1]];
     for(const t of tiers){
-      const a=t[0],b=t[1];if(b-a<2)continue;
+      const a=t[0],b=t[1],stp=t[4];if(b-a<2)continue;
       ctx.globalAlpha=t[2];ctx.lineWidth=t[3];
       ctx.beginPath();ctx.moveTo(sx(h[a].x),sy(h[a].y));
-      for(let i=a+1;i<b;i++){
-        const q=h[i],r=h[i-1];
+      let prev=a;
+      const step=function(i){
+        const q=h[i],v=h[prev];
         /* a feed correction can teleport a trip; don't draw the seam */
-        if(Math.abs(q.x-r.x)+Math.abs(q.y-r.y)>JUMP)ctx.moveTo(sx(q.x),sy(q.y));
+        if(Math.abs(q.x-v.x)+Math.abs(q.y-v.y)>JUMP)ctx.moveTo(sx(q.x),sy(q.y));
         else ctx.lineTo(sx(q.x),sy(q.y));
-      }
+        prev=i;
+      };
+      for(let i=a+stp;i<b;i+=stp)step(i);
+      if(prev<b-1)step(b-1);   /* always land on the tier's last point */
       ctx.stroke();
     }
   }
@@ -465,6 +533,21 @@ function drawUi(list){
   if(!S.sel)return;
   const p=list.find(q=>q.t.id===S.sel);if(!p)return;
   const X=sx(p.x),Y=sy(my(p.y)),c=COLORS[p.r]||'#889',t=(Date.now()%2400)/2400;
+
+  /* where it has been, pulled clear of the crowd */
+  const hh=S.hist.get(S.sel);
+  if(hh&&hh.length>1){
+    uc.save();uc.strokeStyle=c;uc.lineWidth=2.6;uc.globalAlpha=.92;
+    uc.lineCap='round';uc.lineJoin='round';uc.beginPath();
+    uc.moveTo(sx(hh[0].x),sy(hh[0].y));
+    for(let i=1;i<hh.length;i++){
+      const q=hh[i],v=hh[i-1];
+      if(Math.abs(q.x-v.x)+Math.abs(q.y-v.y)>JUMP)uc.moveTo(sx(q.x),sy(q.y));
+      else uc.lineTo(sx(q.x),sy(q.y));
+    }
+    uc.stroke();uc.restore();
+  }
+
   uc.save();
   uc.strokeStyle='#C9A227';uc.lineWidth=1.2;
   uc.beginPath();uc.arc(X,Y,14,0,7);uc.stroke();
@@ -505,15 +588,111 @@ function draw(){
 
 
 /* ── card ────────────────────────────────────────────────── */
+const D={};
+for(const k of ['dsub','dsp','dav','dpk','dsky','dspr','dvlab','dtrace','dj0','dj1','djlab','dcid','dctr'])
+  D[k]=document.getElementById(k);
+
+/* speed from the recorded track. NOTE: positions are interpolated from the
+   feed's arrival predictions and learned segment times, so this is derived
+   pace, not a measured tachometer reading. */
+const MI_DEG=69.0;
+function paces(h){
+  const out=[];
+  for(let i=1;i<h.length;i++){
+    const a=h[i-1],b=h[i],dt=(b.t-a.t)/1000;
+    if(dt<=0)continue;
+    const dy=(b.la-a.la)*MI_DEG, dx=(b.x-a.x)*MI_DEG*Math.cos(a.la*Math.PI/180);
+    const d=Math.hypot(dx,dy);
+    if(d>1.2)continue; /* a feed correction teleported the trip; not a speed */
+    const v=d/dt*3600;
+    if(v>45)continue;  /* faster than NYCT runs: a guessed segment time, not a pace */
+    out.push(v);
+  }
+  return out;
+}
+
+/* velocity as a Gotham skyline: building height is pace, setbacks and all */
+function skyline(sp,w,h){
+  const n=sp.length; if(!n)return ['',''];
+  const peak=Math.max(22,Math.max.apply(null,sp));
+  const bw=w/n, bd=Math.max(1.4,bw-Math.max(2,Math.min(3.4,bw*0.24)));
+  let d='',sp2='';
+  for(let i=0;i<n;i++){
+    const bh=Math.max(1.5,(sp[i]/peak)*h), x=i*bw, y=h-bh;
+    const cap=Math.min(7,bh*0.2), ins=bd*0.24;
+    d+='M'+x.toFixed(1)+' '+h+'V'+(y+cap).toFixed(1)+'H'+(x+ins).toFixed(1)+'V'+y.toFixed(1)
+      +'H'+(x+bd-ins).toFixed(1)+'V'+(y+cap).toFixed(1)+'H'+(x+bd).toFixed(1)+'V'+h+'Z';
+    if(i%4===1&&bh>h*0.55)sp2+='M'+(x+bd/2).toFixed(1)+' '+y.toFixed(1)+'V'+(y-8).toFixed(1);
+  }
+  return [d,sp2];
+}
+
+function walkedFrom(p){
+  const out=[];let cur=p.nb;
+  for(let k=0;k<40;k++){
+    const pv=S.prev.get(p.r+'|'+p.dir+'|'+cur);
+    if(!pv||!STOPS[pv]||out.indexOf(pv)>=0)break;
+    out.push(pv);cur=pv;
+  }
+  return out.reverse();
+}
+
 function fill(p){
   const c=COLORS[p.r]||'#889';
   cb.textContent=p.r==='SI'?'SIR':p.r;cb.style.background=c;
-  cb.style.color=DARKTXT[p.r]?'#000':'#fff';cb.style.fontSize=p.r==='SI'?'10px':'14px';
-  const last=p.t.stops[p.t.stops.length-1],dest=STOPS[base(last.id)];
-  ct.textContent=(p.dir==='N'?'Northbound':p.dir==='S'?'Southbound':'')+(dest?' to '+dest[2]:'');
+  cb.style.color=DARKTXT[p.r]?'#000':'#fff';cb.style.fontSize=p.r==='SI'?'11px':'16px';
+
+  const st=p.t.stops,last=st[st.length-1],dest=STOPS[base(last.id)];
+  D.dsub.textContent=(p.dir==='N'?'Northbound':p.dir==='S'?'Southbound':'In service')
+    +(p.frac>=1?' · at platform':'');
+  ct.textContent=dest?dest[2]:'\u2014';
+
+  const h=S.hist.get(p.t.id)||[],sp=paces(h),enough=sp.length>=4;
+  if(enough){
+    const cur=sp[sp.length-1],pk=Math.max.apply(null,sp);
+    const avg=sp.reduce(function(a,b){return a+b},0)/sp.length;
+    D.dsp.textContent=Math.round(cur);
+    D.dav.textContent=Math.round(avg);
+    D.dpk.textContent=Math.round(pk);
+    const sky=skyline(sp.slice(-30),360,78);
+    D.dsky.setAttribute('d',sky[0]);
+    D.dspr.setAttribute('d',sky[1]);
+    D.dvlab.textContent='Velocity · tracked history';
+  }else{
+    D.dsp.textContent='\u2013';D.dav.textContent='\u2013';D.dpk.textContent='\u2013';
+    D.dsky.setAttribute('d','');D.dspr.setAttribute('d','');
+    D.dvlab.textContent='Velocity · awaiting track';
+  }
+
+  /* full run: what we watched it cover, then what the feed still owes it */
+  const been=walkedFrom(p),cursor=p.idx;
+  const ahead=[];
+  for(let k=cursor+1;k<st.length;k++){const b2=base(st[k].id);if(STOPS[b2])ahead.push(b2)}
+  const run=been.concat([p.nb],ahead),tot=run.length,i=been.length;
+  const step=tot>1?344/(tot-1):0;
+  let g='<path d="M 8 13 H 352" fill="none" stroke="var(--brass-lo)" stroke-width="1" stroke-dasharray="3 4"/>';
+  if(i>0)g+='<path d="M 8 13 H '+(8+step*i).toFixed(1)+'" fill="none" stroke="'+c
+    +'" stroke-width="2.4" stroke-linecap="round" opacity=".9"/>';
+  const stride=Math.max(1,Math.ceil(tot/26));
+  for(let k=0;k<tot;k+=stride){
+    const x=(8+step*k).toFixed(1),done=k<i,here=k===i;
+    g+='<circle cx="'+x+'" cy="13" r="'+(here?4.6:2.8)+'" stroke-width="1.1" fill="'
+      +(here?c:(done?'var(--brass)':'none'))+'" stroke="'
+      +(here?'var(--brass-hi)':(done?'var(--brass)':'var(--brass-lo)'))+'"/>';
+  }
+  g+='<circle cx="'+(8+step*i).toFixed(1)+'" cy="13" r="9" fill="none" stroke="var(--brass)" stroke-width="1" opacity=".75"/>';
+  D.dtrace.innerHTML=g;
+
+  const s0=STOPS[run[0]];
+  D.dj0.textContent=s0?s0[2]:'\u2014';
+  D.dj1.textContent=dest?dest[2]:'\u2014';
   const eta=Math.max(0,Math.round(p.eta/60));
-  cm.textContent=(p.frac>=1?'At '+STOPS[p.nb][2]:'Next: '+STOPS[p.nb][2]+' · '+(eta<1?'<1':eta)+' min')
-    +'\n'+p.t.stops.length+' stops remaining · trip '+p.t.id.slice(-14);
+  D.djlab.textContent=(p.frac>=1?'At '+STOPS[p.nb][2]
+    :'Next '+STOPS[p.nb][2]+' · '+(eta<1?'<1':eta)+' min')+' · '+ahead.length+' to go';
+  D.dcid.textContent=p.t.id.slice(-14);
+  D.dctr.textContent=h.length>1
+    ?'TRACKED '+Math.max(1,Math.round((h[h.length-1].t-h[0].t)/60000))+' MIN'
+    :'TRACKING…';
 }
 cx.onclick=()=>{S.sel=null;card.classList.remove('show')};
 
