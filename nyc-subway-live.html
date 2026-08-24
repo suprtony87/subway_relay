@@ -611,17 +611,19 @@ function paces(h){
   return out;
 }
 
-/* velocity as a Gotham skyline: building height is pace, setbacks and all */
-function skyline(sp,w,h){
+/* velocity as a Gotham skyline: building height is pace, setbacks and all.
+   fl is the street the buildings stand on — the base rule in the markup — and
+   h the height of the tallest, which lands on the top grid line. */
+function skyline(sp,w,h,fl){
   const n=sp.length; if(!n)return ['',''];
   const peak=Math.max(22,Math.max.apply(null,sp));
   const bw=w/n, bd=Math.max(1.4,bw-Math.max(2,Math.min(3.4,bw*0.24)));
   let d='',sp2='';
   for(let i=0;i<n;i++){
-    const bh=Math.max(1.5,(sp[i]/peak)*h), x=i*bw, y=h-bh;
+    const bh=Math.max(1.5,(sp[i]/peak)*h), x=i*bw, y=fl-bh;
     const cap=Math.min(7,bh*0.2), ins=bd*0.24;
-    d+='M'+x.toFixed(1)+' '+h+'V'+(y+cap).toFixed(1)+'H'+(x+ins).toFixed(1)+'V'+y.toFixed(1)
-      +'H'+(x+bd-ins).toFixed(1)+'V'+(y+cap).toFixed(1)+'H'+(x+bd).toFixed(1)+'V'+h+'Z';
+    d+='M'+x.toFixed(1)+' '+fl+'V'+(y+cap).toFixed(1)+'H'+(x+ins).toFixed(1)+'V'+y.toFixed(1)
+      +'H'+(x+bd-ins).toFixed(1)+'V'+(y+cap).toFixed(1)+'H'+(x+bd).toFixed(1)+'V'+fl+'Z';
     if(i%4===1&&bh>h*0.55)sp2+='M'+(x+bd/2).toFixed(1)+' '+y.toFixed(1)+'V'+(y-8).toFixed(1);
   }
   return [d,sp2];
@@ -654,7 +656,7 @@ function fill(p){
     D.dsp.textContent=Math.round(cur);
     D.dav.textContent=Math.round(avg);
     D.dpk.textContent=Math.round(pk);
-    const sky=skyline(sp.slice(-30),360,78);
+    const sky=skyline(sp.slice(-30),360,78,88);
     D.dsky.setAttribute('d',sky[0]);
     D.dspr.setAttribute('d',sky[1]);
     D.dvlab.textContent='Velocity · tracked history';
