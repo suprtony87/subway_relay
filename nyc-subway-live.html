@@ -67,7 +67,7 @@
   .bul.wide{width:auto;padding:0 13px;border-radius:15px;font-size:9px;letter-spacing:.22em;
     background:transparent;border:1px solid var(--brass-lo);color:var(--muted);opacity:1}
 
-  .card{position:absolute;right:22px;top:118px;width:400px;
+  .card{position:absolute;right:22px;top:118px;width:400px;z-index:2;
     background:rgba(8,12,23,.95);border:1px solid var(--brass-lo);padding:20px;display:none;
     backdrop-filter:blur(14px);animation:rise .2s ease}
   .card::after{content:'';position:absolute;inset:5px;border:1px solid var(--brass);opacity:.22;pointer-events:none}
@@ -108,7 +108,7 @@
   }
 
   .panic{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);width:min(420px,calc(100% - 40px));
-    margin:0 auto;border:1px solid var(--brass-lo);background:rgba(8,12,23,.97);padding:22px;display:none}
+    margin:0 auto;border:1px solid var(--brass-lo);background:rgba(8,12,23,.97);padding:22px;display:none;z-index:3}
   .panic.show{display:block}
   .panic h3{margin:0 0 10px;font-family:var(--deco);font-size:15px;letter-spacing:.06em;font-weight:400;color:var(--brass-hi)}
   .panic p{margin:0 0 13px;font-size:12px;line-height:1.65;color:var(--muted)}
